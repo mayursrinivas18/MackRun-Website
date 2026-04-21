@@ -1,60 +1,140 @@
 :root {
-  --primary: #ff4500; /* Injury Alert Orange */
-  --dark: #1a1a1a;    /* Deep Charcoal */
-  --light: #f4f4f4;   /* Off-white */
+  --primary: #ff4500; 
+  --accent: #ff7b00;
+  --dark-bg: #0a0a0a;
+  --card-bg: #161616;
+  --text-main: #ffffff;
+  --text-dim: #a0a0a0;
+  --glass: rgba(255, 255, 255, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Inter', sans-serif; /* Modern tech font */
+  font-family: 'Inter', sans-serif;
   line-height: 1.6;
   margin: 0;
-  color: var(--dark);
-  background-color: white;
+  color: var(--text-main);
+  background-color: var(--dark-bg);
 }
 
-/* Hero Section */
+/* Glassmorphism Navigation Placeholder */
+nav {
+  padding: 20px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -1px;
+  color: var(--primary);
+}
+
+/* Hero Section with subtle gradient */
 .hero {
-  background: var(--dark);
-  color: white;
-  padding: 100px 20px;
+  background: radial-gradient(circle at top right, #2a1100, var(--dark-bg));
+  padding: 120px 20px;
   text-align: center;
+  border-bottom: 1px solid var(--glass);
 }
 
 .hero h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
+  font-size: clamp(3rem, 8vw, 5rem); /* Responsive size */
+  font-weight: 800;
+  margin-bottom: 20px;
+  letter-spacing: -2px;
+  background: linear-gradient(to bottom, #fff, #888);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Feature Grid */
+.hero p {
+  font-size: 1.2rem;
+  color: var(--text-dim);
+  max-width: 600px;
+  margin: 0 auto 40px;
+}
+
+/* Feature Grid with Glass Cards */
 .features {
-  display: flex; /* Makes them sit side-by-side */
-  justify-content: space-around;
-  padding: 50px;
-  flex-wrap: wrap; /* Fixes mobile view */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 80px 5%;
 }
 
 .feature-card {
-  width: 300px;
-  padding: 20px;
-  border: 1px solid #eee;
-  border-radius: 12px;
-  margin: 10px;
-  transition: transform 0.3s;
+  background: var(--card-bg);
+  padding: 40px;
+  border-radius: 24px;
+  border: 1px solid var(--glass);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .feature-card:hover {
-  transform: translateY(-10px); /* Subtle "lift" effect */
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  transform: translateY(-10px);
+  border-color: var(--primary);
+  background: #1c1c1c;
 }
 
-/* The "Buy" Button */
+.feature-card h3 {
+  color: var(--primary);
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.feature-card p {
+  color: var(--text-dim);
+}
+
+/* Forms & Buttons */
 .cta-button {
-  background: var(--primary);
+  background: linear-gradient(45deg, var(--primary), var(--accent));
   color: white;
-  padding: 15px 40px;
-  border-radius: 30px;
+  padding: 18px 45px;
+  border-radius: 12px;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 700;
   display: inline-block;
+  box-shadow: 0 10px 20px rgba(255, 69, 0, 0.2);
+  transition: 0.3s;
 }
 
+.cta-button:hover {
+  box-shadow: 0 15px 30px rgba(255, 69, 0, 0.4);
+  transform: scale(1.05);
+}
+
+input {
+  background: var(--card-bg);
+  border: 1px solid var(--glass);
+  padding: 15px;
+  border-radius: 12px;
+  color: white;
+  margin-bottom: 15px;
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+/* Mission Section */
+.mission {
+    padding: 100px 5%;
+    text-align: center;
+    background: #000;
+}
+
+.mission h2 { font-size: 2.5rem; margin-bottom: 20px; }
