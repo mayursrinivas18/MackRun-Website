@@ -1,1 +1,60 @@
+:root {
+  --primary: #ff4500; /* Injury Alert Orange */
+  --dark: #1a1a1a;    /* Deep Charcoal */
+  --light: #f4f4f4;   /* Off-white */
+}
+
+body {
+  font-family: 'Inter', sans-serif; /* Modern tech font */
+  line-height: 1.6;
+  margin: 0;
+  color: var(--dark);
+  background-color: white;
+}
+
+/* Hero Section */
+.hero {
+  background: var(--dark);
+  color: white;
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+/* Feature Grid */
+.features {
+  display: flex; /* Makes them sit side-by-side */
+  justify-content: space-around;
+  padding: 50px;
+  flex-wrap: wrap; /* Fixes mobile view */
+}
+
+.feature-card {
+  width: 300px;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  margin: 10px;
+  transition: transform 0.3s;
+}
+
+.feature-card:hover {
+  transform: translateY(-10px); /* Subtle "lift" effect */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* The "Buy" Button */
+.cta-button {
+  background: var(--primary);
+  color: white;
+  padding: 15px 40px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+}
 
