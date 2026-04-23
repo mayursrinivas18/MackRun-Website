@@ -1,86 +1,3 @@
-Here is the complete, integrated code for MackRun. I have restructured the features section to create a "Product Showcase" where your 3D render sits in the center, flanked by the technical details.
-
-1. index.html
-HTML
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MackRun | Precision Achilles Performance</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
-</head>
-<body>
-
-    <nav>
-        <div class="logo">MACKRUN</div>
-        <a href="#contact" class="nav-link">Reserve Now</a>
-    </nav>
-
-    <header class="hero">
-        <h1>Move Fearlessly.</h1>
-        <p>The first intelligence-driven wearable that monitors Achilles strain in real-time. Built for elite performance, engineered for safety.</p>
-        <a href="#contact" class="cta-button">Contact Us</a>
-    </header>
-
-    <section class="features">
-        <div class="feature-col">
-            <div class="feature-card">
-                <h3>Precision Monitoring</h3>
-                <p>Lab-grade sensors track every micro-stretch of the Achilles tendon, sending data at 1000Hz.</p>
-            </div>
-            
-            <div class="feature-card">
-                <h3>Anatomic Fit</h3>
-                <p>Aerospace-grade fabric conforms to your leg, providing medical stability without compromising mobility.</p>
-            </div>
-        </div>
-
-        <div class="product-showcase">
-            <div class="glow-effect"></div>
-            <img src="product-render.png" alt="MackRun 3D Rendering" class="product-render">
-        </div>
-
-        <div class="feature-col">
-            <div class="feature-card">
-                <h3>Neural Analysis</h3>
-                <p>Our proprietary AI predicts fatigue patterns before they lead to structural failure.</p>
-            </div>
-
-            <div class="feature-card">
-                <h3>Real-Time Alerts</h3>
-                <p>Haptic feedback instantly notifies you when tendon strain exceeds safe thresholds.</p>
-            </div>
-        </div>
-    </section>
-
-    <section class="mission">
-        <h2>The MackRun Mission</h2>
-        <p class="mission-text">
-            We are bridging the gap between sports science and wearable tech. Our goal is to reduce lower-limb recovery times and the number of injuries globally.
-        </p>
-    </section>
-
-    <section id="contact" class="contact-section">
-        <h2>Join Us!</h2>
-        <p>Secure your Achilles Wearable for $549.</p>
-        
-        <form class="contact-form">
-            <input type="text" placeholder="Full Name" required>
-            <input type="email" placeholder="Email Address" required>
-            <button type="submit" class="cta-button submit-btn">Submit</button>
-        </form>
-    </section>
-
-    <footer>
-        &copy; 2026 MackRun Technologies. Built for the future of movement.
-    </footer>
-
-</body>
-</html>
-2. style.css
-CSS
 :root {
     --primary: #ff4500; 
     --accent: #ff7b00;
@@ -105,7 +22,7 @@ body {
     overflow-x: hidden;
 }
 
-/* Navigation */
+/* Nav with Blur */
 nav {
     padding: 20px 5%;
     display: flex;
@@ -113,6 +30,7 @@ nav {
     align-items: center;
     background: rgba(10, 10, 10, 0.8);
     backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--glass);
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -123,196 +41,143 @@ nav {
     font-size: 1.5rem;
     letter-spacing: -1px;
     color: var(--primary);
+    text-shadow: 0 0 15px rgba(255, 69, 0, 0.3);
 }
 
 .nav-link {
     color: white; 
     text-decoration: none; 
     font-weight: 600;
-    transition: color 0.3s;
 }
 
-.nav-link:hover {
-    color: var(--primary);
-}
-
-/* Hero Section */
+/* Restored Hero Gradient */
 .hero {
     background: radial-gradient(circle at top right, #2a1100, var(--dark-bg));
-    padding: 120px 20px;
+    padding: 140px 20px;
     text-align: center;
     border-bottom: 1px solid var(--glass);
 }
 
 .hero h1 {
-    font-size: clamp(3rem, 8vw, 5rem); 
+    font-size: clamp(3.5rem, 10vw, 5.5rem); 
     font-weight: 800;
     margin-bottom: 20px;
-    letter-spacing: -2px;
-    background: linear-gradient(to bottom, #fff, #888);
+    letter-spacing: -3px;
+    background: linear-gradient(to bottom, #ffffff 30%, #666666 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     color: var(--text-dim);
-    max-width: 600px;
+    max-width: 650px;
     margin: 0 auto 40px;
 }
 
-/* Features Grid with Product Center */
+/* Features Styling */
 .features {
     display: grid;
     grid-template-columns: 1fr 1.5fr 1fr;
     align-items: center;
     gap: 40px;
     padding: 100px 5%;
-}
-
-.feature-col {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
+    background: radial-gradient(circle at center, #1a0b00 0%, var(--dark-bg) 70%);
 }
 
 .feature-card {
     background: var(--card-bg);
-    padding: 30px;
+    padding: 35px;
     border-radius: 24px;
     border: 1px solid var(--glass);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.4s ease;
 }
 
 .feature-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
     border-color: var(--primary);
-    background: #1c1c1c;
+    box-shadow: 0 0 30px rgba(255, 69, 0, 0.1);
 }
 
 .feature-card h3 {
     color: var(--primary);
-    font-size: 1.3rem;
-    margin-bottom: 10px;
+    font-size: 1.4rem;
+    margin-bottom: 12px;
 }
 
-.feature-card p {
-    color: var(--text-dim);
-    font-size: 0.95rem;
-}
-
-/* Product Image Styling */
+/* Image Showcase Glow */
 .product-showcase {
     position: relative;
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
 .product-render {
     width: 100%;
-    max-width: 450px;
+    max-width: 500px;
+    filter: drop-shadow(0 0 40px rgba(255, 69, 0, 0.25));
     z-index: 2;
-    filter: drop-shadow(0 0 50px rgba(255, 69, 0, 0.15));
 }
 
 .glow-effect {
     position: absolute;
-    width: 250px;
-    height: 250px;
+    width: 350px;
+    height: 350px;
     background: var(--primary);
-    filter: blur(100px);
-    opacity: 0.1;
+    filter: blur(120px);
+    opacity: 0.2;
     z-index: 1;
 }
 
-/* Mission & Contact */
+/* Mission Section */
 .mission {
-    padding: 100px 5%;
+    padding: 120px 5%;
     text-align: center;
     background: #000;
+    border-top: 1px solid var(--glass);
 }
 
-.mission h2 { font-size: 2.5rem; margin-bottom: 20px; }
-
-.mission-text {
-    max-width: 700px; 
-    margin: 0 auto; 
-    color: var(--text-dim); 
-    font-size: 1.2rem;
+.mission h2 { 
+    font-size: 2.8rem; 
+    margin-bottom: 25px; 
+    color: #fff;
 }
 
+/* Contact Section */
 .contact-section {
-    padding: 100px 5%; 
+    padding: 120px 5%; 
     text-align: center; 
-    background: radial-gradient(circle at bottom, #111, #0a0a0a);
-}
-
-.contact-form {
-    display: flex; 
-    flex-direction: column; 
-    max-width: 450px; 
-    margin: 40px auto 0;
-}
-
-/* Inputs & Buttons */
-input {
-    background: var(--card-bg);
-    border: 1px solid var(--glass);
-    padding: 15px;
-    border-radius: 12px;
-    color: white;
-    margin-bottom: 15px;
-    font-size: 1rem;
-}
-
-input:focus {
-    outline: none;
-    border-color: var(--primary);
+    background: radial-gradient(circle at bottom, #2a1100 0%, #0a0a0a 100%);
 }
 
 .cta-button {
     background: linear-gradient(45deg, var(--primary), var(--accent));
     color: white;
-    padding: 18px 45px;
-    border-radius: 12px;
+    padding: 20px 50px;
+    border-radius: 14px;
     text-decoration: none;
-    font-weight: 700;
+    font-weight: 800;
     display: inline-block;
-    box-shadow: 0 10px 20px rgba(255, 69, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(255, 69, 0, 0.3);
     transition: 0.3s;
 }
 
 .cta-button:hover {
-    box-shadow: 0 15px 30px rgba(255, 69, 0, 0.4);
-    transform: translateY(-2px);
+    box-shadow: 0 20px 40px rgba(255, 69, 0, 0.5);
+    transform: scale(1.05);
 }
 
-.submit-btn {
-    border: none;
-    cursor: pointer;
-    width: 100%;
+input {
+    background: #1a1a1a;
+    border: 1px solid var(--glass);
+    padding: 18px;
+    border-radius: 12px;
+    color: white;
+    margin-bottom: 15px;
 }
 
-footer {
-    padding: 60px;
-    text-align: center;
-    color: #444;
-    font-size: 0.9rem;
-}
-
-/* Responsive Design */
+/* Mobile Fixes */
 @media (max-width: 1024px) {
-    .features {
-        grid-template-columns: 1fr;
-        text-align: center;
-    }
-    
-    .product-showcase {
-        grid-row: 1; /* Puts image at top on mobile */
-    }
-
-    .product-render {
-        max-width: 300px;
-    }
+    .features { grid-template-columns: 1fr; }
+    .product-showcase { grid-row: 1; }
 }
