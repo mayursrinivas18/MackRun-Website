@@ -1,77 +1,1224 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MackRun | Precision Achilles Performance</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MackRun | Neuromuscular Performance Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────────── */
+    :root {
+      --blue:       #00d4ff;
+      --blue-dim:   #0099cc;
+      --blue-tint:  rgba(0,212,255,0.08);
+      --blue-glow:  rgba(0,212,255,0.18);
+      --base:       #080810;
+      --surface:    #0c0c1a;
+      --card:       #10101f;
+      --border:     rgba(0,212,255,0.12);
+      --border-mid: rgba(0,212,255,0.22);
+      --text:       #ffffff;
+      --text-mid:   #8b92b8;
+      --text-dim:   #4a5070;
+      --mono:       'DM Mono', monospace;
+      --sans:       'Space Grotesk', sans-serif;
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--sans);
+      background: var(--base);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* ─── GRID LINES (ambient background) ───────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,212,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,212,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ─── NAV ────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 6%;
+      height: 68px;
+      background: rgba(8,8,16,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 1.05rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      color: var(--blue);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text-mid);
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 0.8rem !important;
+      color: var(--blue) !important;
+      border: 1px solid var(--border-mid) !important;
+      padding: 8px 20px;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s !important;
+    }
+    .nav-cta:hover {
+      background: var(--blue-tint) !important;
+      color: var(--blue) !important;
+    }
+
+    /* ─── HERO ───────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 140px 6% 100px;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .hero-glow {
+      position: absolute;
+      top: -10%;
+      right: -5%;
+      width: 60vw;
+      height: 70vh;
+      background: radial-gradient(ellipse at center, rgba(0,212,255,0.07) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--blue);
+    }
+    .hero h1 {
+      font-size: clamp(3.2rem, 7vw, 6.5rem);
+      font-weight: 700;
+      line-height: 1.03;
+      letter-spacing: -0.03em;
+      max-width: 820px;
+      margin-bottom: 32px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--blue);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      color: var(--text-mid);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 52px;
+      font-weight: 400;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      font-weight: 500;
+      color: var(--base);
+      background: var(--blue);
+      padding: 14px 36px;
+      border-radius: 4px;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: opacity 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 28px rgba(0,212,255,0.3);
+    }
+    .btn-primary:hover {
+      opacity: 0.88;
+      box-shadow: 0 0 44px rgba(0,212,255,0.45);
+    }
+    .btn-ghost {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      font-weight: 400;
+      color: var(--text-mid);
+      background: transparent;
+      border: 1px solid var(--border-mid);
+      padding: 14px 36px;
+      border-radius: 4px;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover {
+      color: var(--blue);
+      border-color: var(--blue);
+    }
+
+    /* ─── HERO STATS BAR ─────────────────────────────────────── */
+    .hero-stats {
+      display: flex;
+      gap: 0;
+      margin-top: 80px;
+      border-top: 1px solid var(--border);
+      padding-top: 40px;
+      width: 100%;
+      max-width: 820px;
+    }
+    .hero-stat {
+      flex: 1;
+      padding-right: 40px;
+      border-right: 1px solid var(--border);
+    }
+    .hero-stat:last-child { border-right: none; padding-right: 0; padding-left: 40px; }
+    .hero-stat:not(:first-child):not(:last-child) { padding-left: 40px; }
+    .stat-value {
+      font-family: var(--mono);
+      font-size: 2.4rem;
+      font-weight: 500;
+      color: var(--blue);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* ─── TICKER ─────────────────────────────────────────────── */
+    .ticker-wrap {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: rgba(0,212,255,0.03);
+      overflow: hidden;
+      padding: 13px 0;
+    }
+    .ticker-track {
+      display: flex;
+      gap: 0;
+      animation: ticker 28s linear infinite;
+      white-space: nowrap;
+    }
+    .ticker-item {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+      padding: 0 40px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ticker-item span {
+      color: var(--blue);
+      font-weight: 500;
+    }
+    .ticker-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--blue);
+      display: inline-block;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes ticker {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.3; }
+    }
+
+    /* ─── SECTION WRAPPER ────────────────────────────────────── */
+    section { position: relative; z-index: 1; }
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 100px 6%;
+    }
+    .section-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--blue);
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .section-body {
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      max-width: 560px;
+      line-height: 1.75;
+    }
+
+    /* ─── SYSTEM SECTION ─────────────────────────────────────── */
+    .system-section { background: var(--surface); }
+    .system-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-top: 60px;
+    }
+    .system-copy .section-body { max-width: 100%; margin-bottom: 36px; }
+
+    /* Pod diagram */
+    .pod-diagram {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .pod-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 24px;
+      align-items: center;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .pod-card:hover {
+      border-color: var(--border-mid);
+      box-shadow: 0 0 30px rgba(0,212,255,0.06);
+    }
+    .pod-icon {
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--border-mid);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--blue-tint);
+      flex-shrink: 0;
+    }
+    .pod-icon svg { width: 22px; height: 22px; stroke: var(--blue); fill: none; stroke-width: 1.5; }
+    .pod-name {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      color: var(--blue);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .pod-desc {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      line-height: 1.5;
+    }
+    .pod-specs {
+      display: flex;
+      gap: 16px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+    .pod-spec {
+      font-family: var(--mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      padding: 3px 9px;
+      border-radius: 3px;
+    }
+
+    /* ─── METRICS SECTION ────────────────────────────────────── */
+    .metrics-section { background: var(--base); }
+    .metrics-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: end;
+      margin-bottom: 60px;
+    }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .metric-cell {
+      background: var(--card);
+      padding: 36px 32px;
+      transition: background 0.3s;
+    }
+    .metric-cell:hover { background: var(--surface); }
+    .metric-num {
+      font-family: var(--mono);
+      font-size: 2.6rem;
+      font-weight: 500;
+      color: var(--blue);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .metric-unit {
+      font-size: 1rem;
+      color: var(--text-dim);
+    }
+    .metric-label {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      margin-bottom: 12px;
+    }
+    .metric-desc {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ─── WORKFLOW SECTION ───────────────────────────────────── */
+    .workflow-section { background: var(--surface); }
+    .workflow-steps {
+      margin-top: 60px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .workflow-step {
+      background: var(--card);
+      padding: 40px 32px;
+      position: relative;
+    }
+    .step-num {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      margin-bottom: 24px;
+    }
+    .step-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .step-body {
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+    }
+    .step-line {
+      position: absolute;
+      top: 40px;
+      right: -1px;
+      width: 1px;
+      height: 40px;
+      background: var(--blue);
+      opacity: 0.5;
+    }
+
+    /* ─── SIGNAL SECTION ─────────────────────────────────────── */
+    .signal-section { background: var(--base); }
+    .signal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-top: 60px;
+    }
+    .signal-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .signal-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .signal-row:last-child { border-bottom: none; }
+    .signal-row:hover { background: var(--blue-tint); }
+    .signal-name {
+      font-size: 0.9rem;
+      color: var(--text-mid);
+    }
+    .signal-value {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--blue);
+    }
+
+    /* waveform animation */
+    .waveform-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px;
+      overflow: hidden;
+    }
+    .waveform-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .waveform-svg {
+      width: 100%;
+      height: 100px;
+      overflow: visible;
+    }
+    .waveform-path {
+      fill: none;
+      stroke: var(--blue);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      opacity: 0.85;
+      animation: waveShift 4s ease-in-out infinite alternate;
+    }
+    .waveform-path-2 {
+      stroke: rgba(0,212,255,0.35);
+      animation: waveShift2 4s ease-in-out infinite alternate;
+    }
+    @keyframes waveShift {
+      0%   { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -40; }
+    }
+    @keyframes waveShift2 {
+      0%   { stroke-dashoffset: -20; }
+      100% { stroke-dashoffset: -60; }
+    }
+    .waveform-axis {
+      stroke: var(--border);
+      stroke-width: 1;
+    }
+    .waveform-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .waveform-meta span {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── MISSION SECTION ────────────────────────────────────── */
+    .mission-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .mission-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 120px 6%;
+      text-align: center;
+    }
+    .mission-quote {
+      font-size: clamp(1.5rem, 3vw, 2.4rem);
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 40px;
+    }
+    .mission-quote em {
+      font-style: normal;
+      color: var(--blue);
+    }
+    .mission-body {
+      font-size: 1rem;
+      color: var(--text-mid);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+
+    /* ─── CONTACT SECTION ────────────────────────────────────── */
+    .contact-section { background: var(--base); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 60px;
+    }
+    .contact-points {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin-top: 32px;
+    }
+    .contact-point {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .contact-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+    .contact-point-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .contact-point-body {
+      font-size: 0.85rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+    }
+    .contact-form {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 40px;
+    }
+    .form-label {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .form-input {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 13px 16px;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus { border-color: var(--blue); }
+    .form-input::placeholder { color: var(--text-dim); }
+    .form-select {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 13px 16px;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      outline: none;
+      appearance: none;
+      transition: border-color 0.2s;
+      cursor: pointer;
+    }
+    .form-select:focus { border-color: var(--blue); }
+    .form-select option { background: var(--card); }
+    .form-textarea {
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 13px 16px;
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      margin-bottom: 24px;
+      outline: none;
+      resize: vertical;
+      min-height: 100px;
+      transition: border-color 0.2s;
+    }
+    .form-textarea:focus { border-color: var(--blue); }
+    .form-textarea::placeholder { color: var(--text-dim); }
+    .form-submit {
+      width: 100%;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--base);
+      background: var(--blue);
+      border: none;
+      padding: 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: opacity 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 20px rgba(0,212,255,0.25);
+    }
+    .form-submit:hover {
+      opacity: 0.88;
+      box-shadow: 0 0 36px rgba(0,212,255,0.4);
+    }
+
+    /* ─── FOOTER ─────────────────────────────────────────────── */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 40px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-logo {
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.18em;
+      color: var(--blue);
+    }
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-links a {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--blue); }
+
+    /* ─── DIVIDER LINE ───────────────────────────────────────── */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .system-grid,
+      .signal-grid,
+      .contact-grid,
+      .metrics-header { grid-template-columns: 1fr; gap: 40px; }
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+      .workflow-steps { grid-template-columns: 1fr 1fr; }
+      .hero-stats { flex-direction: column; gap: 24px; }
+      .hero-stat { border-right: none; border-bottom: 1px solid var(--border); padding: 0 0 24px; }
+      .hero-stat:last-child { border-bottom: none; padding: 0; }
+      .hero-stat:not(:first-child) { padding-left: 0; padding-top: 24px; }
+    }
+    @media (max-width: 640px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+      .workflow-steps { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .contact-form { padding: 28px 24px; }
+      .section-inner { padding: 72px 5%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track, .waveform-path, .waveform-path-2 { animation: none; }
+    }
+  </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">MACKRUN</div>
-        <a href="#contact" style="color: white; text-decoration: none; font-weight: 600;">Reserve Now</a>
-    </nav>
+  <!-- ─── NAV ─────────────────────────────────────────────────── -->
+  <nav>
+    <a class="nav-logo" href="#">MR // MACKRUN</a>
+    <ul class="nav-links">
+      <li><a href="#system">System</a></li>
+      <li><a href="#metrics">Metrics</a></li>
+      <li><a href="#workflow">Workflow</a></li>
+      <li><a href="#contact" class="nav-cta">Request Pilot</a></li>
+    </ul>
+  </nav>
 
-    <header class="hero">
-        <h1>Move Fearlessly.</h1>
-        <p>The first intelligence-driven wearable that monitors Achilles strain in real-time. Built for elite performance, engineered for safety.</p>
-        <a href="#contact" class="cta-button">Contact Us</a>
-    </header>
-
-    <section class="features">
-    <div class="feature-col">
-        <div class="feature-card">
-            <h3>Precision Monitoring</h3>
-            <p>Lab-grade sensors track every micro-stretch of the Achilles tendon, sending data at 1000Hz.</p>
-        </div>
-        
-        <div class="feature-card">
-            <h3>Anatomic Fit</h3>
-            <p>Aerospace-grade fabric conforms to your leg, providing medical stability without compromising mobility.</p>
-        </div>
+  <!-- ─── HERO ─────────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-eyebrow">Neuromuscular Performance Intelligence</div>
+    <h1>See the injury<br /><em>before it happens.</em></h1>
+    <p class="hero-sub">
+      MackRun is a three-pod wearable system that measures muscle fiber conduction velocity and Achilles tendon kinematics in real time — giving performance staff the physiological signal that precedes injury.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Request Team Pilot</a>
+      <a href="#system" class="btn-ghost">View System</a>
     </div>
-
-    <div class="product-showcase">
-        <img src="mackrun_render.png" alt="MackRun 3D Rendering" class="product-render">
-        <div class="glow-effect"></div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="stat-value">1000<span style="font-size:1.4rem">Hz</span></div>
+        <div class="stat-label">EMG sample rate per channel</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-value">416<span style="font-size:1.4rem">Hz</span></div>
+        <div class="stat-label">IMU kinematic sampling</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-value">&lt;1<span style="font-size:1.4rem">ms</span></div>
+        <div class="stat-label">Wireless transmission latency</div>
+      </div>
     </div>
+  </section>
 
-    <div class="feature-col">
-        <div class="feature-card">
-            <h3>Neural Analysis</h3>
-            <p>Our proprietary AI predicts fatigue patterns before they lead to structural failure.</p>
-        </div>
-
-        <div class="feature-card">
-            <h3>Cloud Sync</h3>
-            <p>Instant biometric reporting synced to your medical team for optimized recovery tracking.</p>
-        </div>
+  <!-- ─── TICKER ───────────────────────────────────────────────── -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <div class="ticker-item"><span class="ticker-dot"></span> CH1 EMG <span>+0.84 mV</span></div>
+      <div class="ticker-item">CONDUCTION VELOCITY <span>4.2 m/s</span></div>
+      <div class="ticker-item">ANKLE ACCEL Z <span>+2.31 g</span></div>
+      <div class="ticker-item">PRE-ACTIVATION INDEX <span>38 ms</span></div>
+      <div class="ticker-item">CH2 EMG <span>+0.71 mV</span></div>
+      <div class="ticker-item">FATIGUE INDEX <span>NOMINAL</span></div>
+      <div class="ticker-item">GYRO X <span>112 °/s</span></div>
+      <div class="ticker-item">BLE RSSI <span>-42 dBm</span></div>
+      <div class="ticker-item">BATTERY <span>87%</span></div>
+      <div class="ticker-item">RLD CMRR <span>>90 dB</span></div>
+      <!-- duplicate for seamless loop -->
+      <div class="ticker-item"><span class="ticker-dot"></span> CH1 EMG <span>+0.84 mV</span></div>
+      <div class="ticker-item">CONDUCTION VELOCITY <span>4.2 m/s</span></div>
+      <div class="ticker-item">ANKLE ACCEL Z <span>+2.31 g</span></div>
+      <div class="ticker-item">PRE-ACTIVATION INDEX <span>38 ms</span></div>
+      <div class="ticker-item">CH2 EMG <span>+0.71 mV</span></div>
+      <div class="ticker-item">FATIGUE INDEX <span>NOMINAL</span></div>
+      <div class="ticker-item">GYRO X <span>112 °/s</span></div>
+      <div class="ticker-item">BLE RSSI <span>-42 dBm</span></div>
+      <div class="ticker-item">BATTERY <span>87%</span></div>
+      <div class="ticker-item">RLD CMRR <span>>90 dB</span></div>
     </div>
-</section>
+  </div>
 
-    <section class="mission">
-        <h2>The MackRun Mission</h2>
-        <p style="max-width: 700px; margin: 0 auto; color: #a0a0a0; font-size: 1.2rem;">
-            We are bridging the gap between sports science and wearable tech. Our goal is to reduce lower-limb recovery times and the number of injuries.
+  <!-- ─── SYSTEM ───────────────────────────────────────────────── -->
+  <section class="system-section" id="system">
+    <div class="section-inner">
+      <div class="system-grid">
+        <div class="system-copy">
+          <div class="section-eyebrow">Three-Pod Architecture</div>
+          <h2 class="section-title">One ankle hub.<br/>Two muscle nodes.</h2>
+          <p class="section-body" style="margin-bottom:24px;">
+            Each athlete wears three devices simultaneously. The two Muscle Pods stream raw EMG over ESP-NOW to the Ankle Pod hub, which fuses neuromuscular timing data with three-axis kinematics and relays a composite signal to the coaching iPad over BLE.
+          </p>
+          <p class="section-body">
+            No base station. No tethered receivers. No setup beyond applying the disposable electrode patch and snapping the pod on.
+          </p>
+        </div>
+        <div class="pod-diagram">
+          <div class="pod-card">
+            <div class="pod-icon">
+              <svg viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a4 4 0 018 0v2"/><circle cx="12" cy="14" r="2"/></svg>
+            </div>
+            <div>
+              <div class="pod-name">Ankle Pod — Hub</div>
+              <div class="pod-desc">LSM6DSOTR 6-axis IMU. Receives ESP-NOW from both muscle pods. Transmits composite BLE stream to coach app.</div>
+              <div class="pod-specs">
+                <span class="pod-spec">416Hz IMU</span>
+                <span class="pod-spec">BLE 5.3</span>
+                <span class="pod-spec">ESP-NOW RX</span>
+                <span class="pod-spec">70mAh</span>
+              </div>
+            </div>
+          </div>
+          <div class="pod-card">
+            <div class="pod-icon">
+              <svg viewBox="0 0 24 24"><path d="M3 12h3m15 0h-3M12 3v3m0 12v3"/><circle cx="12" cy="12" r="4"/><path d="M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>
+            </div>
+            <div>
+              <div class="pod-name">Muscle Pod × 2 — Nodes</div>
+              <div class="pod-desc">ADS1292 24-bit dual-channel EMG. Four-electrode colinear array. Disposable ENIG flex patch. Magnetic snap attachment.</div>
+              <div class="pod-specs">
+                <span class="pod-spec">1000SPS</span>
+                <span class="pod-spec">ESP-NOW TX</span>
+                <span class="pod-spec">RLD active</span>
+                <span class="pod-spec">70mAh</span>
+              </div>
+            </div>
+          </div>
+          <div class="pod-card" style="background: var(--blue-tint); border-color: var(--border-mid);">
+            <div class="pod-icon" style="border-color: var(--blue); background: rgba(0,212,255,0.12);">
+              <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <div>
+              <div class="pod-name">Flex Patch — Disposable</div>
+              <div class="pod-desc">Single-use polyimide electrode array. ENIG gold pads. 3M 2477P medical adhesive. N52 magnetic retention. One per session.</div>
+              <div class="pod-specs">
+                <span class="pod-spec">4 electrodes</span>
+                <span class="pod-spec">20mm spacing</span>
+                <span class="pod-spec">ENIG gold</span>
+                <span class="pod-spec">3M 2477P</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── METRICS ──────────────────────────────────────────────── -->
+  <section class="metrics-section" id="metrics">
+    <div class="section-inner">
+      <div class="metrics-header">
+        <div>
+          <div class="section-eyebrow">What MackRun Measures</div>
+          <h2 class="section-title">The signals<br/>that matter.</h2>
+        </div>
+        <p class="section-body">
+          Every metric MackRun generates is a direct physiological indicator — not a proxy, not an inference from accelerometer noise. Real neuromuscular data, captured at clinical resolution, during live practice.
         </p>
-    </section>
+      </div>
+      <div class="metrics-grid">
+        <div class="metric-cell">
+          <div class="metric-num">CV<span class="metric-unit" style="font-size:1.2rem"> m/s</span></div>
+          <div class="metric-label">Conduction Velocity</div>
+          <div class="metric-desc">Motor unit firing speed along the muscle fiber. Decreases measurably with fatigue before any performance decline is visible externally.</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-num">PAI<span class="metric-unit" style="font-size:1.2rem"> ms</span></div>
+          <div class="metric-label">Pre-Activation Index</div>
+          <div class="metric-desc">Time between EMG onset and the corresponding ankle acceleration event. Quantifies neuromuscular readiness — a primary Achilles injury risk marker.</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-num">MF<span class="metric-unit" style="font-size:1.2rem"> Hz</span></div>
+          <div class="metric-label">Median Frequency</div>
+          <div class="metric-desc">EMG spectral centroid. Shifts leftward with muscle fatigue. Tracked per-channel across both the gastrocnemius and tibialis anterior.</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-num">6°<span class="metric-unit" style="font-size:1.2rem">-axis</span></div>
+          <div class="metric-label">Ankle Kinematics</div>
+          <div class="metric-desc">3-axis accelerometer and 3-axis gyroscope at 416Hz. Gait pattern, stride symmetry, impact force estimation, and joint loading.</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-num">L/R<span class="metric-unit" style="font-size:1.2rem"> Δ%</span></div>
+          <div class="metric-label">Bilateral Asymmetry</div>
+          <div class="metric-desc">EMG amplitude and timing differences between the medial gastrocnemius and tibialis anterior. Compensation patterns appear before pain does.</div>
+        </div>
+        <div class="metric-cell">
+          <div class="metric-num">RTP<span class="metric-unit" style="font-size:1.2rem"> score</span></div>
+          <div class="metric-label">Return-to-Play Score</div>
+          <div class="metric-desc">Composite neuromuscular readiness index derived from conduction velocity, pre-activation index, and bilateral symmetry. Objective clearance data.</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <section id="contact" style="padding: 100px 5%; text-align: center; background: radial-gradient(circle at bottom, #111, #0a0a0a);">
-        <h2 style="font-size: 2.5rem;">Join Us!</h2>
-        <p style="color: #a0a0a0; margin-bottom: 40px;">Secure your Achilles Wearable for $549.</p>
-        
-        <form style="display: flex; flex-direction: column; max-width: 450px; margin: 0 auto;">
-            <input type="text" placeholder="Full Name" required>
-            <input type="email" placeholder="Email Address" required>
-            <button type="submit" class="cta-button" style="border: none; cursor: pointer; width: 100%;">Submit</button>
-        </form>
-    </section>
+  <div class="divider"></div>
 
-    <footer style="padding: 40px; text-align: center; color: #444; font-size: 0.9rem;">
-        &copy; 2026 MackRun Technologies. Built for the future of movement.
-    </footer>
+  <!-- ─── WORKFLOW ─────────────────────────────────────────────── -->
+  <section class="workflow-section" id="workflow">
+    <div class="section-inner">
+      <div class="section-eyebrow">Game-Day Workflow</div>
+      <h2 class="section-title">Sixty seconds to data.</h2>
+      <div class="workflow-steps">
+        <div class="workflow-step">
+          <div class="step-num">01 — PREP</div>
+          <div class="step-title">Patch application</div>
+          <div class="step-body">Equipment staff applies disposable flex patches to target muscles. Peel, press, done. No conductive gel, no skin prep beyond a quick wipe.</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-num">02 — ATTACH</div>
+          <div class="step-title">Pod snap-on</div>
+          <div class="step-body">Rigid pod snaps magnetically onto the flex patch. N52 magnets self-align the unit. Pogo pins make contact. System boots automatically on motion detection.</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-num">03 — MONITOR</div>
+          <div class="step-title">Live coaching view</div>
+          <div class="step-body">Coach iPad connects over BLE. Real-time fatigue index, asymmetry flags, and conduction velocity trends update per stride. Actionable during practice.</div>
+          <div class="step-line"></div>
+        </div>
+        <div class="workflow-step">
+          <div class="step-num">04 — RECOVER</div>
+          <div class="step-title">Post-session analysis</div>
+          <div class="step-body">Pods return to the dock. Flex patches are discarded. Full session data syncs to the platform. Return-to-play scores generated overnight.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── SIGNAL SECTION ───────────────────────────────────────── -->
+  <section class="signal-section">
+    <div class="section-inner">
+      <div class="signal-grid">
+        <div>
+          <div class="section-eyebrow">Live Data Stream</div>
+          <h2 class="section-title">Every rep.<br/>Every stride.</h2>
+          <p class="section-body" style="margin-bottom:36px;">
+            MackRun transmits a timestamped composite data frame from all three pods with sub-150ms end-to-end latency. Performance staff see neuromuscular state in real time — not a post-practice report.
+          </p>
+          <div class="signal-list">
+            <div class="signal-row"><span class="signal-name">EMG Channel 1 — Medial Gastrocnemius</span><span class="signal-value">+0.84 mV</span></div>
+            <div class="signal-row"><span class="signal-name">EMG Channel 2 — Tibialis Anterior</span><span class="signal-value">+0.31 mV</span></div>
+            <div class="signal-row"><span class="signal-name">Conduction Velocity</span><span class="signal-value">4.2 m/s</span></div>
+            <div class="signal-row"><span class="signal-name">Pre-Activation Index</span><span class="signal-value">38 ms</span></div>
+            <div class="signal-row"><span class="signal-name">Ankle Acceleration (Z)</span><span class="signal-value">+2.31 g</span></div>
+            <div class="signal-row"><span class="signal-name">Fatigue Index</span><span class="signal-value">NOMINAL</span></div>
+            <div class="signal-row"><span class="signal-name">Bilateral Asymmetry Δ</span><span class="signal-value">3.2%</span></div>
+          </div>
+        </div>
+        <div class="waveform-wrap">
+          <div class="waveform-label">Live EMG — Medial Gastrocnemius // 1000 SPS</div>
+          <svg class="waveform-svg" viewBox="0 0 500 100" preserveAspectRatio="none">
+            <line class="waveform-axis" x1="0" y1="50" x2="500" y2="50"/>
+            <path class="waveform-path waveform-path-2" stroke-dasharray="800" d="
+              M0,50 L20,50 L22,48 L24,50 L30,50 L32,45 L34,50 L50,50
+              L52,48 L54,50 L60,50
+              L65,30 L68,5 L71,80 L74,25 L77,50
+              L90,50 L92,48 L95,50
+              L110,50 L113,48 L116,50
+              L125,35 L128,8 L131,75 L134,20 L137,50
+              L150,50 L153,48 L156,50
+              L170,50 L172,47 L174,50
+              L185,32 L188,6 L191,78 L194,22 L197,50
+              L210,50 L213,48 L216,50
+              L230,50 L232,47 L234,50
+              L245,34 L248,7 L251,76 L254,23 L257,50
+              L270,50 L273,48 L276,50
+              L290,50 L292,47 L294,50
+              L305,31 L308,5 L311,79 L314,24 L317,50
+              L330,50 L333,48 L336,50
+              L350,50 L352,47 L354,50
+              L365,33 L368,6 L371,77 L374,21 L377,50
+              L390,50 L393,48 L396,50
+              L410,50 L412,47 L414,50
+              L425,35 L428,8 L431,75 L434,20 L437,50
+              L450,50 L453,48 L456,50
+              L470,50 L472,47 L474,50
+              L485,32 L488,7 L491,78 L494,22 L497,50 L500,50
+            "/>
+            <path class="waveform-path" stroke-dasharray="800" d="
+              M0,50 L18,50 L20,47 L22,50 L28,50 L30,44 L32,50 L48,50
+              L63,28 L66,3 L69,82 L72,23 L75,50
+              L88,50 L90,47 L93,50
+              L108,50 L111,47 L114,50
+              L123,33 L126,6 L129,77 L132,18 L135,50
+              L148,50 L151,47 L154,50
+              L168,50 L170,46 L172,50
+              L183,30 L186,5 L189,80 L192,20 L195,50
+              L208,50 L211,47 L214,50
+              L228,50 L230,46 L232,50
+              L243,32 L246,5 L249,78 L252,21 L255,50
+              L268,50 L271,47 L274,50
+              L288,50 L290,46 L292,50
+              L303,29 L306,3 L309,81 L312,22 L315,50
+              L328,50 L331,47 L334,50
+              L348,50 L350,46 L352,50
+              L363,31 L366,4 L369,79 L372,19 L375,50
+              L388,50 L391,47 L394,50
+              L408,50 L410,46 L412,50
+              L423,33 L426,6 L429,77 L432,18 L435,50
+              L448,50 L451,47 L454,50
+              L468,50 L470,46 L472,50
+              L483,30 L486,5 L489,80 L492,20 L495,50 L500,50
+            "/>
+          </svg>
+          <div class="waveform-meta">
+            <span>t = 0 ms</span>
+            <span>SAMPLING // 1000 Hz</span>
+            <span>t = 500 ms</span>
+          </div>
+          <div style="margin-top:28px; border-top:1px solid var(--border); padding-top:20px; display:flex; flex-direction:column; gap:12px;">
+            <div style="display:flex; justify-content:space-between;">
+              <span style="font-family:var(--mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:0.12em;">CONDUCTION VELOCITY</span>
+              <span style="font-family:var(--mono);font-size:0.65rem;color:var(--blue);">4.2 m/s</span>
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+              <span style="font-family:var(--mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:0.12em;">INTER-CHANNEL DELAY</span>
+              <span style="font-family:var(--mono);font-size:0.65rem;color:var(--blue);">4.8 ms</span>
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+              <span style="font-family:var(--mono);font-size:0.65rem;color:var(--text-dim);letter-spacing:0.12em;">FATIGUE STATE</span>
+              <span style="font-family:var(--mono);font-size:0.65rem;color:#00ff88;">NOMINAL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── MISSION ──────────────────────────────────────────────── -->
+  <section class="mission-section">
+    <div class="mission-inner">
+      <div class="section-eyebrow" style="justify-content:center; margin-bottom:36px;">Why MackRun Exists</div>
+      <p class="mission-quote">
+        Achilles ruptures end careers.<br/>
+        The signal that predicts them<br/>
+        has always existed — <em>in the muscle itself.</em>
+      </p>
+      <p class="mission-body">
+        We built MackRun to make muscle fiber conduction velocity measurable during live athletic activity for the first time. Every component — from the 24-bit analog front end to the disposable electrode patch to the coach-facing application — was designed around one question: what does the athlete's nervous system know that the coaching staff doesn't?
+      </p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ─── CONTACT ──────────────────────────────────────────────── -->
+  <section class="contact-section" id="contact">
+    <div class="section-inner">
+      <div class="section-eyebrow">Team Pilot Program</div>
+      <h2 class="section-title">Work with us.</h2>
+      <div class="contact-grid">
+        <div>
+          <p class="section-body" style="margin-bottom:40px;">
+            MackRun is currently accepting a limited number of NFL and NBA organizations for our inaugural team pilot program. Pilot teams receive full hardware deployment, data integration support, and direct access to our engineering team throughout the season.
+          </p>
+          <div class="contact-points">
+            <div class="contact-point">
+              <div class="contact-dot"></div>
+              <div>
+                <div class="contact-point-title">Hardware + software deployment</div>
+                <div class="contact-point-body">Full system installation for your roster. We handle setup, calibration, and onboarding for performance staff.</div>
+              </div>
+            </div>
+            <div class="contact-point">
+              <div class="contact-dot"></div>
+              <div>
+                <div class="contact-point-title">Direct engineering access</div>
+                <div class="contact-point-body">Pilot teams have a dedicated line to our engineering team for integration questions and custom data requests.</div>
+              </div>
+            </div>
+            <div class="contact-point">
+              <div class="contact-dot"></div>
+              <div>
+                <div class="contact-point-title">Data ownership</div>
+                <div class="contact-point-body">All athlete data belongs to the organization. We do not aggregate or share pilot team data without explicit authorization.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form">
+          <label class="form-label" for="name">Contact name</label>
+          <input class="form-input" type="text" id="name" placeholder="Director of Sports Science" />
+
+          <label class="form-label" for="org">Organization</label>
+          <input class="form-input" type="text" id="org" placeholder="Team / Organization" />
+
+          <label class="form-label" for="email">Email</label>
+          <input class="form-input" type="email" id="email" placeholder="you@organization.com" />
+
+          <label class="form-label" for="league">League</label>
+          <select class="form-select" id="league">
+            <option value="" disabled selected>Select league</option>
+            <option value="nfl">NFL</option>
+            <option value="nba">NBA</option>
+            <option value="ncaa">NCAA</option>
+            <option value="other">Other</option>
+          </select>
+
+          <label class="form-label" for="message">What are you trying to solve?</label>
+          <textarea class="form-textarea" id="message" placeholder="Tell us about your current injury monitoring workflow and where you see gaps..."></textarea>
+
+          <button class="form-submit" type="button">Request Pilot Access</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ───────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-logo">MR // MACKRUN</div>
+    <div class="footer-links">
+      <a href="#system">System</a>
+      <a href="#metrics">Metrics</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 MackRun Technologies. Built in New Jersey.</div>
+  </footer>
 
 </body>
 </html>
