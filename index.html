@@ -1089,12 +1089,20 @@
     });
 
     // Scroll-reveal fade-ins
-    if ('IntersectionObserver' in window) {
+    if ('IntersectionObserver' in window) 
+    {
       const els = document.querySelectorAll('.pod-card, .metric-cell, .workflow-step, .signal-row');
       els.forEach(el => { el.style.opacity = '0'; el.style.transform = 'translateY(16px)'; el.style.transition = 'opacity 0.5s ease, transform 0.5s ease'; });
-      const obs = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'none'; obs.unobserve(e.target); }
+      const obs = new IntersectionObserver(entries => 
+      {
+        entries.forEach(e => 
+        {
+          if (e.isIntersecting) 
+          { 
+            e.target.style.opacity = '1'; 
+            e.target.style.transform = 'none'; 
+            obs.unobserve(e.target); 
+          }
         });
       }, { threshold: 0.12 });
       els.forEach(el => obs.observe(el));
